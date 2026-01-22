@@ -1,0 +1,6 @@
+#/bin/bash
+# Source - https://stackoverflow.com/a
+# Posted by davidism, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-01-13, License - CC BY-SA 4.0
+
+nohup gunicorn -w 3 -b 0.0.0.0:4000 app:bookpc & 

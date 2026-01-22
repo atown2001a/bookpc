@@ -1,0 +1,60 @@
+.iface {
+text-align: right;
+border: 1.5em dotted black;
+}
+
+
+body {
+	background-color: navy;
+	color: white;
+	margin: 0px;
+	padding: 5px;
+}
+
+.contentX {
+margin: 50px;
+padding: 20px;
+border: 0.5em dotted white;
+}
+
+ul {
+  list-style-type: none;
+margin: 0; padding: 0;
+ background-color: black;
+// display: flex; 
+ overflow: hidden;
+  // justify-content: center; 
+}
+
+ul li {
+  float: left;
+}
+
+ul li a {
+  display: block;  
+  color: white;
+  text-align: center;  
+  padding: 25px 50px;
+  text-decoration: none;
+}
+
+ul li a:hover:not(.active) {
+  background-color: white;
+  color: black;
+}
+
+ul li a.active {
+  background-color: gold;
+  color: black;
+}
+
+h1 {
+color: gold;
+}
+p, h2, h3, h4{
+color: white;
+padding: 0px; margin: 0px;
+}
+.bookpc {
+margin: 2.5rem;
+}

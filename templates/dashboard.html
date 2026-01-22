@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     	 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+<title>Dashboard - Branch {{ branch }}</title>
+<style>
+#lBTN {
+float:right;background-color:#804000;font-weight:bold;
+}
+
+#chCBTN{
+float:right;
+font-size: 14px;
+font-weight: bold;
+}
+
+#chCBTNg { 
+color: white;
+background-color: green; 
+}
+
+#chCBTNr {
+color: white;
+background-color: red;
+}
+#chCBTNb {
+color: white;
+background-color: brown;
+}
+</style>
+</head>
+<body>
+<ul>
+  <li><a class="active" href="{{ url_for ('dashboard') }}">Book PC</a></li>
+<!--  <li><a href="{#{{ url_for('about') }} #}" >About</a></li>-->
+
+<div id="lBTN">
+  <li><a href="{{ url_for('logout') }}">Logout</a></li> 
+</div>
+ 
+</ul>
+<div class="contentX"> 
+ <h1>Branch: {{ branch }}</h1>  
+ <p>Welcome, {{ fullname }}!</p>
+	<div class="bookpc">
+	<h2>Book a computer</h2>
+
+	<form method="POST" action="/bookpc">
+	<input type="date" name="date" required>  
+	<select name="pc">
+	{% for pc in pcs %}
+	<option value="{{ pc }}">{{ pc }}</option>
+	{% endfor %}
+	</select>
+
+	<select name="time">
+	{% for t in times %}
+	<option value="{{ t }}">{{ t }}</option>
+	{% endfor %}
+	</select>
+	<button type="submit">Book</button>
+	{% if msg %}
+	<p> {{ msg }}</p>
+	{% endif %}
+	</form>
+		<div id="chCBTN">
+			<button onclick="fBrown()"  id="chCBTNb">Logout color Brown</button> 
+			<button onclick="fGreen()" id="chCBTNg">Logout color Green</button>
+			<button onclick="fRed()"  id="chCBTNr">Logout color Red</button>
+	        </div>
+        </div>
+</div>
+<script>
+const userAgent = navigator.userAgent.toLowerCase();
+
+// Detect Firefox
+const isFirefox = userAgent.includes('firefox') || userAgent.includes('fxios');
+
+// Detect Chrome
+const isChrome = userAgent.includes('chrome') && 
+                 !userAgent.includes('edg') && 
+                 !userAgent.includes('opr');
+
+if (isFirefox) {
+    console.log("Running Firefox-specific code...");
+
+
+
+function checkZoom() {
+    // A common way to estimate zoom, though imperfect across all setups
+    var zoomLevel = Math.round(window.devicePixelRatio * 100);
+
+    	    // This is a rough estimation. For 120% browser zoom, devicePixelRatio might be around 0.9 on standard displays.
+   	    // On high DPI displays, this gets complicated.
+	    // A better, but more complex, method involves measuring a fixed-size element in CSS pixels vs device pixels.
+
+	    // Let's assume for a standard 100% OS scale, 120% browser zoom gives 0.9 dPR
+	    // We'll set a tolerance range
+	    var requiredZoom = 120;
+	    // var tolerance = 10; // Allow for slight variations
+
+//	    var content = document.getElementById('content-wrapper');
+//	    var message = document.getElementById('zoom-message');
+
+    	    if (zoomLevel !== requiredZoom) {
+    
+		//    content.style.display = 'block';
+       		//    message.style.display = 'none';
+
+ 	     		document.body.style.display = 'none';  // Hide all content
+        		alert(`Page zoom is not at 120%. It's at ${zoomLevel}%.. Please set it to 120%`);
+    		} else {
+			document.body.style.display = 'block';  // Show content if zoom is 120%
+    		}
+	    }
+	window.onload = function() {
+	    checkZoom();
+	};
+
+} else if (isChrome) {
+// For Chrome Only
+    console.log("Running Chrome-specific code...");
+      document.body.style.zoom = "110%";
+   function checkZoom() {
+    // Get the current zoom level
+    const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
+
+if (zoomLevel !== 110) {
+        document.body.style.display = 'none';  // Hide all content
+        alert(`Page zoom is not at 110%. It's at ${zoomLevel}%.. Please set it to 110%`);
+    } else {
+        document.body.style.display = 'block';  // Show content if zoom is 110%
+    }
+}
+
+	window.onload = function() {
+	    checkZoom();
+	};
+
+}
+
+function fBrown() {
+//Brown
+  document.getElementById("lBTN").style.backgroundColor = "#804000";
+}
+function fGreen() {
+//Green
+  document.getElementById("lBTN").style.backgroundColor = "#008000";
+}
+function fRed() {
+//Red
+  document.getElementById("lBTN").style.backgroundColor = "#800000";
+}
+</script>
+</body>
+</html>
