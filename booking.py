@@ -62,9 +62,10 @@ def register(app):
            return redirect(url_for("dashboard"))
 
         bookings.append(booking)
-
-        with open(path, "w") as f:
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
             json.dump(bookings, f, indent=2)
+        os.replace(tmp, path)
         session["msg"] = "\u2705 Booking Confirmed" 
         print("BOOKING:", booking)
         return redirect(url_for("dashboard"))
