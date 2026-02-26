@@ -16,11 +16,23 @@ def register(app):
     def bookpc():
         if "username" not in session or "branch" not in session:
             return redirect(url_for("login"))
-
+        branch = session.get("branch")
         pc = request.form.get("pc")
         time = request.form.get("time")
         date = request.form.get("date")
 
+        if not branch:
+           return redirect(url_for("dashboard"))
+
+        if pc not in PCS_BY_BRANCH.get(branch,
+        []):
+           session["msg"] = "❌ invalid PC for your branch"
+           return redirect(url_for("dashboard"))
+
+        if time not in TIME_SLOTS:
+           session["msg"] = "❌ invalid time slot"
+           return redirect(url_for("dashboard"))
+          
         book_date = datetime.strptime(date, "%Y-%m-%d").date()
         if book_date < datetime.today().date():
            session["msg"] = "❌ Can't book past dates"
